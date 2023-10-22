@@ -1,0 +1,49 @@
+import React, { useState } from 'react';
+import { View, Image, TouchableOpacity, Text } from 'react-native';
+import ImagePicker from 'react-native-image-picker'; // Библиотека для выбора изображения
+
+const YourComponent = () => {
+  const [imageSource, setImageSource] = useState(null);
+
+  // Функция для открытия галереи и выбора изображения
+  const pickImage = () => {
+    const options = {
+      title: 'Select Image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        // Вы получите выбранное изображение здесь
+        const source = { uri: response.uri };
+        setImageSource(source);
+      }
+    });
+  };
+
+  return (
+    <View>
+      {/* Область нажатия для выбора фотографии */}
+      <TouchableOpacity onPress={pickImage}>
+        {/* Отображение фотографии */}
+        <Image
+          source={imageSource || require('./default-image.jpg')} // Используйте путь к вашей фотографии по умолчанию
+          style={{ width: 200, height: 200 }}
+        />
+        {/* Иконка или текстовая метка для изменения фотографии */}
+        <Text style={{ position: 'absolute', bottom: 10, right: 10, color: 'white', backgroundColor: 'blue', padding: 5, borderRadius: 5 }}>
+          Change Photo
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default YourComponent;
