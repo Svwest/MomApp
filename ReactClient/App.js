@@ -1,24 +1,22 @@
 import React from 'react';
 import {StatusBar, Text, View,StyleSheet} from 'react-native';
-import Navigation from './src/components/Navigation';
 import {AuthProvider} from './src/context/AuthContext';
 import NavigationNew from './navigation/NavigationNew';
-import { PaperProvider } from 'react-native-paper';
 
 
 
 const App = () => {
 
   return (
-    <PaperProvider >
+  
     <AuthProvider>
     
-      <StatusBar backgroundColor="black" />
+      <StatusBar backgroundColor="grey" />
     
       <NavigationNew  />
       
     </AuthProvider>
-    </PaperProvider>
+
   );
 };
 

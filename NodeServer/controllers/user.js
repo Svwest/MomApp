@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const secret = require("../keys");
-const user = require("../models/user");
+
 
 exports.createUser = async (req, res) => {
   const { fullname, email, password } = req.body;
@@ -19,11 +19,6 @@ exports.createUser = async (req, res) => {
   await user.save();
   res.json({ success: true, user });
 };
-
-
-
-
-
 
 exports.userSignIn = async (req, res) => {
   const { email, password } = req.body;
@@ -78,11 +73,6 @@ exports.userSignIn = async (req, res) => {
   res.json({ success: true, user: userInfo, token });
 };
 
-
-
-
-
-
 exports.signOut = async (req, res) => {
   if (req.headers && req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
@@ -101,24 +91,19 @@ exports.signOut = async (req, res) => {
   }
 };
 
-
-
-
-
 exports.getUserObj = async (req, res) => {
-   const { parameter } = req.query;  
- 
-  const user = await User.findOne(parameter)
-  
+  const { parameter } = req.query;
+
+  const user = await User.findOne(parameter);
+
   if (!user)
     return res.json({
       success: false,
       message: "user not found, with the given email! getUser error",
     });
 
-
   const userInfo = {
-        fullname: user.fullname,
+    fullname: user.fullname,
     email: user.email,
     avatar: user.avatar
       ? user.avatar
@@ -128,8 +113,6 @@ exports.getUserObj = async (req, res) => {
     location: user.location,
     isOnline: user.isOnline,
   };
-  console.log('Sent from server: ', res.body)
-  res.json({ success: true, user: userInfo});
+  console.log("Sent from server: ", res.body);
+  res.json({ success: true, user: userInfo });
 };
-
-
